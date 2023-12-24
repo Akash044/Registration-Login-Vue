@@ -1,6 +1,6 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
-import Registration from '../Registration.vue'
-import Login from '../Login.vue'
+import Registration from '../views/Registration.vue'
+import Login from '../views/Login.vue'
 
 const router = createRouter({
     history: createWebHashHistory(import.meta.env.BASE_URL),

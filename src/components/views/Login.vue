@@ -31,7 +31,7 @@
   },
   methods:{
     handleLoginBtn(email,password){
-      console.log(email,password)
+      // console.log(email,password)
       this.isLoading = true;
       this.value = 'Please wait...';
       axios.post('http://localhost:8080/api/login',{
@@ -39,7 +39,7 @@
         password:password,
       })
     .then(res=>{
-      console.log("res--->",res.data)
+      // console.log("res--->",res.data)
       this.value = 'Login';
       const {isSuccess, message, user} = res.data;
         if(isSuccess){
@@ -54,7 +54,7 @@
         }
       })
     .catch(error=>{
-        console.log("error-->",error);
+        // console.log("error-->",error);
         this.isLoading = false;
         this.value = 'Login';
       })
