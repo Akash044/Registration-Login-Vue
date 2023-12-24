@@ -1,26 +1,9 @@
-<script>
-  import Login from './components/Login.vue';
-  import Registration from './components/Registration.vue';
-  export default{
-    name: 'app',
-    components: {
-      Registration,
-      Login,
-    },
-    data() {
-      return {
-        component: "Registration",
-      };
-    },
-  }
+<script setup>
 </script>
 
 <template>
-  
   <main class="main-section">
-
-    <router-link to="/login">Login</router-link>
-    <router-link to="/registration">Register</router-link>
+    <RouterView />
   </main>
 </template>
 

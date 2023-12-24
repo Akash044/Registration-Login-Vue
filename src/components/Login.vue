@@ -1,15 +1,17 @@
 <template>
     <div id="app">
-    {if()<h1 class="title">Sign in</h1>
+    <h1 class="title">Sign in</h1>
     
     <form @submit.prevent="handleLoginBtn(email,password)">
       
       <input class="input-field" type="email" v-model="email" name="email" id="email" placeholder="Enter Email..." required>
       <input class="input-field" type="password" v-model="password" name="password" id="password" placeholder="Enter Your Password" required>
   
-      <input type="submit" value="Login">
+      <input type="submit" v-model="value" :disabled="isLoading">
+      
     </form>
-    <div><h2>You don't have an account? <span class="sign-in">Sign up.</span></h2></div>}
+    <div><h2>You don't have an account? <router-link to="/registration" class="sign-in">Sign up</router-link></h2></div>
+    <div><h3>{{ message }}</h3></div>
   </div>
   </template>
   
@@ -22,26 +24,39 @@
         email:'',
         password:'',
         message:'',
+        isLoading:false,
+        isSuccess:false,
+        value: 'Login',
       }
   },
   methods:{
     handleLoginBtn(email,password){
       console.log(email,password)
-  
+      this.isLoading = true;
+      this.value = 'Please wait...';
       axios.post('http://localhost:8080/api/login',{
         email:email,   
         password:password,
       })
     .then(res=>{
       console.log("res--->",res.data)
+      this.value = 'Login';
       const {isSuccess, message, user} = res.data;
         if(isSuccess){
           
-          this.message = user.firstName + " " + user.lastName + " " + "You logged in successfully" ;
+          this.message = user.firstName + " " + user.lastName + ", " + "you logged in successfully!!" ;
+          this.isLoading = !isSuccess;
+          this.isSuccess = isSuccess;
+          
+        }else{
+          this.message = message;
+          this.isLoading = false;
         }
       })
     .catch(error=>{
         console.log("error-->",error);
+        this.isLoading = false;
+        this.value = 'Login';
       })
       
     },

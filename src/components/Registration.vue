@@ -10,14 +10,10 @@
     <input class="input-field" type="number" v-model="contact" name="contact" id="contact" placeholder="Enter Your Contact no..." required>
     <input class="input-field" type="password" v-model="password" name="password" id="password" placeholder="Enter Your Password" required>
 
-    <input type="submit" value="Register">
+    <input type="submit" v-model="value" :disabled="isLoading">
   </form>
-  <div><h2>Already have an account? <span class="sign-in">Sign in.</span></h2></div>
-</div>
-
-<div>
-  <h5>Click here to verify your account  </h5>
-  <a href={{link}}>{{ link }}</a>
+  <div><h2>Already have an account? <router-link to="/login">Sign in</router-link></h2></div>
+  <div><h3>{{ message }}</h3></div>
 </div>
 
 </template>
@@ -33,13 +29,16 @@ export default {
       lastName:'',
       contact:'',
       password:'',
-      link:'dkMDKMkm',
+      message:'',
+      isLoading:false,
+      value: 'Register',
     }
 },
 methods:{
   handleSubmitBtn(email,firstName, lastName, contact, password){
-    console.log(email,firstName, lastName, contact, password)
-
+    // console.log(email,firstName, lastName, contact, password)
+    this.value = 'Please wait...';
+    this.isLoading = true;
     axios.post('http://localhost:8080/api/register',{
       email:email,
       firstName:firstName,
@@ -49,20 +48,19 @@ methods:{
       isVerified: false
     })
   .then(res=>{
-    console.log("res--->",res.data)
-    const {isSuccess, verificationLink} = res.data;
-      if(isSuccess){
-        
-        this.link = verificationLink;
-      }
+      // console.log("res--->",res.data)
+      const {message} = res.data;
+      this.message = message;
+      this.value = 'Register';
+      this.isLoading = false;
     })
   .catch(error=>{
-      console.log("error-->",error);
-    })
-    
+      // console.log("error-->",error);
+      this.value = 'Register';
+      this.isLoading = false;
+    })   
   },
-}
-}
+}}
 </script> 
 
 <style scoped>
