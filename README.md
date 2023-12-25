@@ -1,4 +1,5 @@
 # Registration-Login-Email-Authentication
+# Please change the port number in the Axios API call from the front end with the server port number. [if you changed the port number]
 
 This template should help get you started developing with Vue 3 in Vite.
 
